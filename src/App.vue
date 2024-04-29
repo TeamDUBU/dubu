@@ -10,14 +10,15 @@
 
 <script>
 export default {
-  name:"App",
-  components:{},
-  methods:{},
-  computed:{
+  name: "App",
+  components: {},
+  methods: {},
+  computed: {
     isConnected() {
       return this.$store.state.wallet.isConnected;
     },
-  },mounted() {
+  },
+  mounted() {
     const Toast = this.$swal.mixin({
       toast: true,
       position: "top-start",
@@ -45,8 +46,7 @@ export default {
       }
     }
   },
- 
-}
+};
 </script>
 
 <style>

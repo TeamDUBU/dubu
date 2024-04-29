@@ -24,8 +24,8 @@ export default {
       return this.$store.state.wallet.isConnected;
     },
   },
-  created(){
+  created() {
     this.connectWallet();
-  }
+  },
 };
 </script>
