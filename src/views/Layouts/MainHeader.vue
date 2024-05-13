@@ -188,7 +188,7 @@
                       >
                         <i
                           class="fa-regular fa-handshake mx-1 text-xl"
-                          style="color: #0"
+                          style="color: #000000"
                         ></i
                         ><span class="text-base">파트너십</span>
                       </div>
@@ -223,7 +223,7 @@
                           >
                             <i
                               class="fa-brands fa-medium mx-2 cursor-pointer text-xl"
-                              style="color: #0"
+                              style="color: #000000"
                             ></i
                           ></a>
                         </div>
@@ -264,7 +264,6 @@
               v-if="!isConnected"
               class="cursor-pointer rounded-xl bg-gray-100 p-2 hover:bg-gray-300 hover:text-blue-400"
             >
-              
               <p class="px-4">Connect Wallet</p>
             </div>
             <div v-else>
@@ -307,7 +306,11 @@ export default {
   },
   computed: {
     getWallet() {
-      return this.$store.state.wallet.address.substr(0, 4) + "...." + this.$store.state.wallet.address.substr(-4);
+      return (
+        this.$store.state.wallet.address.substr(0, 4) +
+        "...." +
+        this.$store.state.wallet.address.substr(-4)
+      );
     },
     isConnected() {
       return this.$store.state.wallet.isConnected;
@@ -338,5 +341,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

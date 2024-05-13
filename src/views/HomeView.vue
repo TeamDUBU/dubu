@@ -9,8 +9,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: "HomeView",
-  components: {
-  },
+  components: {},
   methods: {
     ...mapActions(["connectWallet"]),
   },
