@@ -6,43 +6,47 @@ import MainView from "../views/MainView.vue";
 import SellView from "../views/SellView.vue";
 import TAView from "../views/TransactionView.vue";
 import MainLayout from "../views/Layouts/MainLayout.vue";
+import ManageLayout from "../views/Layouts/ManageLayout.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
+    component: HomeView,
+  },
+  {
+    path: "/main",
     component: MainLayout,
     children: [
       {
-        name: "Home",
-        path: "/",
-        component: HomeView,
-      },
-      {
         path: "/main",
-        name: "MainView",
-        // component: () =>
-        //   import(/* webpackChunkName: "about" */ "../views/MainView.vue"),
+        name: "main",
         component: MainView,
       },
       {
-        path: "/manager",
-        name: "ETView",
-        component: ETView,
-      },
-      {
-        path: "/sell",
-        name: "SellView",
+        path: ":sell",
+        name: "sell",
         component: SellView,
       },
+    ],
+  },
+  {
+    path: "/manage",
+    component: ManageLayout,
+    children: [
       {
-        path: "/transaction",
-        name: "TAView",
-        component: TAView,
+        path: "/manage",
+        name: "manage",
+        component: ETView,
       },
     ],
+  },
+  {
+    path: "/transaction",
+    name: "trans",
+    component: TAView,
   },
 ];
 

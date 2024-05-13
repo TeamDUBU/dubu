@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>This is KMap</div>
 </template>
 
 <script>

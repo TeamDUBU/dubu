@@ -23,11 +23,11 @@
         </div>
         <!-- Search Tab -->
         <!-- <div>
-            <input type="text" placeholder="Search NFTs"
-            :value="searchItem" @input="searchItem = $event.target.value"
-            @keyup.enter="search(searchItem)"
-            class="bg-gray-200 rounded-xl border-gray-50 border-2 px-10 "/>
-          </div> -->
+              <input type="text" placeholder="Search NFTs"
+              :value="searchItem" @input="searchItem = $event.target.value"
+              @keyup.enter="search(searchItem)"
+              class="bg-gray-200 rounded-xl border-gray-50 border-2 px-10 "/>
+            </div> -->
 
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
         <ul
@@ -41,22 +41,6 @@
             class="text-sm font-semibold text-gray-800 hover:text-blue-400 lg:text-xl"
           >
             <router-link :to="{ path: item.link }">{{ item.name }}</router-link>
-          </li>
-
-          <li>
-            <div
-              @click="connectWallet"
-              v-if="!isConnected"
-              class="cursor-pointer rounded-xl bg-gray-100 p-2 hover:bg-gray-300 hover:text-blue-400"
-            >
-              <p class="px-4">Connect Wallet</p>
-            </div>
-            <div v-else>
-              <span> {{ getWallet }}</span>
-              <i
-                class="fa-solid fa-cart-shopping mx-8 cursor-not-allowed text-xl"
-              ></i>
-            </div>
           </li>
         </ul>
       </nav>
@@ -72,16 +56,6 @@ export default {
       isMenuOpen: false,
       isLaunchpadOpen: false,
       showMenu: false,
-      items: [
-        {
-          name: "사기",
-          link: "/main",
-        },
-        {
-          name: "팔기",
-          link: "/main/sell",
-        },
-      ],
       searchItem: "",
     };
   },
