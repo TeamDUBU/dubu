@@ -1,27 +1,17 @@
 <template>
-  <div>
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      
-    };
+    return {};
   },
-  computed: {
-    
-  },
-  components: {
-  },
-  methods: {
-  },
-  created() {
-    
-  },
+  computed: {},
+  components: {},
+  methods: {},
+  created() {},
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

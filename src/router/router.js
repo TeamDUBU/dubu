@@ -14,18 +14,18 @@ const routes = [
     path: "/",
     name: "home",
     component: MainLayout,
-    children:[
+    children: [
       {
-        name: 'Home',
-        path: '/',
-        component: HomeView
+        name: "Home",
+        path: "/",
+        component: HomeView,
       },
       {
         path: "/main",
         name: "MainView",
         // component: () =>
         //   import(/* webpackChunkName: "about" */ "../views/MainView.vue"),
-        component : MainView,
+        component: MainView,
       },
       {
         path: "/manager",
@@ -42,12 +42,12 @@ const routes = [
         name: "TAView",
         component: TAView,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 const router = new VueRouter({
-  mode : 'history',
+  mode: "history",
   routes,
 });
 
