@@ -79,7 +79,11 @@ export default {
         },
         {
           name: "팔기",
-          link: "/main/sell",
+          link: "/sell",
+        },
+        {
+          name: "공인중개사",
+          link: "/manage",
         },
       ],
       searchItem: "",

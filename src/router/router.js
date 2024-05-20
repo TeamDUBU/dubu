@@ -6,7 +6,6 @@ import MainView from "../views/MainView.vue";
 import SellView from "../views/SellView.vue";
 import TAView from "../views/TransactionView.vue";
 import MainLayout from "../views/Layouts/MainLayout.vue";
-import ManageLayout from "../views/Layouts/ManageLayout.vue";
 
 Vue.use(VueRouter);
 
@@ -26,16 +25,10 @@ const routes = [
         component: MainView,
       },
       {
-        path: ":sell",
+        path: "/sell",
         name: "sell",
         component: SellView,
       },
-    ],
-  },
-  {
-    path: "/manage",
-    component: ManageLayout,
-    children: [
       {
         path: "/manage",
         name: "manage",

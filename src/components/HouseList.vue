@@ -1,9 +1,17 @@
 <template>
-  <div>This is HouseList</div>
+  <div>
+    <button @click="buttonClicked">house no.1</button>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    buttonClicked() {
+      this.$emit("button-click");
+    },
+  },
+};
 </script>
 
 <style></style>
