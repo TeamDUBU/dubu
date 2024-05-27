@@ -1,7 +1,5 @@
 <template>
-  <div class="">
-    <h1 class="text-3xl">This is an TA page</h1>
-  </div>
+  <div>This is KMap</div>
 </template>
 
 <script>

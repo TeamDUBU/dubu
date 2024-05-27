@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import { store } from "./store/index";
-import router from "./router/index";
+import router from "./router/router";
 import dotenv from "dotenv";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";

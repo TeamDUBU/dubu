@@ -12,42 +12,39 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
+    component: HomeView,
+  },
+  {
+    path: "/main",
     component: MainLayout,
-    children:[
-      {
-        name: 'Home',
-        path: '/',
-        component: HomeView
-      },
+    children: [
       {
         path: "/main",
-        name: "MainView",
-        // component: () =>
-        //   import(/* webpackChunkName: "about" */ "../views/MainView.vue"),
-        component : MainView,
-      },
-      {
-        path: "/manager",
-        name: "ETView",
-        component: ETView,
+        name: "main",
+        component: MainView,
       },
       {
         path: "/sell",
-        name: "SellView",
+        name: "sell",
         component: SellView,
       },
       {
-        path: "/transaction",
-        name: "TAView",
-        component: TAView,
+        path: "/manage",
+        name: "manage",
+        component: ETView,
       },
-    ]
-  }
+    ],
+  },
+  {
+    path: "/transaction",
+    name: "trans",
+    component: TAView,
+  },
 ];
 
 const router = new VueRouter({
-  mode : 'history',
+  mode: "history",
   routes,
 });
 
