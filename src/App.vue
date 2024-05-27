@@ -14,7 +14,7 @@ export default {
       return this.$store.state.wallet.isConnected;
     },
   },
-  mounted() {
+  moounted() {
     const Toast = this.$swal.mixin({
       toast: true,
       position: "top-start",
@@ -33,7 +33,7 @@ export default {
         text: "Chrome에서 카이카스 지갑 설치후 사용하실수 있습니다",
       });
     } else {
-      if (!(window.klaytn.selectedAddress > 0)) {
+      if (!window.klaytn.selectedAddress > 0) {
         Toast.fire({
           icon: "warning",
           title: "지갑이 연결되지 않았습니다.",
