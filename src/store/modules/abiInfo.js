@@ -1612,3 +1612,5 @@ const NFTABI = [
     type: "function",
   },
 ];
+
+export {dubuABI, NFTABI}

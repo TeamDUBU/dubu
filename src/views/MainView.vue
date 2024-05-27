@@ -8,6 +8,7 @@
     />
     <house-info
       v-else
+      :item="selectedItem"
       class="w-[35%] h-screen flex items-center justify-center border-2 border-black"
     />
     <k-map class="w-[65%] h-screen border-2 border-black" />
@@ -28,11 +29,13 @@ export default {
   data() {
     return {
       showHouseInfo: false, // State to toggle between HouseList and HouseInfo
+      selectedItem: null,
     };
   },
   methods: {
-    toggleView() {
+    toggleView(item) {
       this.showHouseInfo = !this.showHouseInfo;
+      this.selectedItem = item;
     },
   },
 };
