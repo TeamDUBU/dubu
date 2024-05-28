@@ -1,5 +1,5 @@
-import Caver from 'caver-js';
-import CaverExtKAS from 'caver-js-ext-kas';
+import Caver from "caver-js";
+import CaverExtKAS from "caver-js-ext-kas";
 
 const caver = new Caver(window.klaytn);
 const caverExt = new CaverExtKAS();

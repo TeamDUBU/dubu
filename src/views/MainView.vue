@@ -1,17 +1,17 @@
 <template>
-  <div class="flex">
-    <!-- Conditionally render HouseList or HouseInfo -->
+  <div class="flex h-screen">
     <house-list
       v-if="!showHouseInfo"
-      class="w-[35%] h-screen flex items-center justify-center border-2 border-black"
+      class="w-1/3 h-full flex items-center justify-center border-2 border-black overflow-y-auto"
       @button-click="toggleView"
     />
     <house-info
       v-else
       :item="selectedItem"
-      class="w-[35%] h-screen flex items-center justify-center border-2 border-black"
+      class="w-1/3 h-full flex items-center justify-center border-2 border-black overflow-y-auto"
+      @close-house-info="toggleView"
     />
-    <k-map class="w-[65%] h-screen border-2 border-black" />
+    <k-map class="w-2/3 h-full border-2 border-black" />
   </div>
 </template>
 
@@ -28,14 +28,14 @@ export default {
   },
   data() {
     return {
-      showHouseInfo: false, // State to toggle between HouseList and HouseInfo
+      showHouseInfo: false,
       selectedItem: null,
     };
   },
   methods: {
     toggleView(item) {
       this.showHouseInfo = !this.showHouseInfo;
-      this.selectedItem = item;
+      this.selectedItem = item || null;
     },
   },
 };

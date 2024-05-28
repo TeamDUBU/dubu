@@ -1,0 +1,66 @@
+<template>
+  <div>
+    <h1>Sell Form</h1>
+    <form @submit.prevent="handleSubmit">
+      <input type="file" @change="handleFileUpload" multiple />
+      <button type="submit">Submit</button>
+    </form>
+    <div v-if="imageUrls.length">
+      <h2>Uploaded Images:</h2>
+      <div v-for="url in imageUrls" :key="url">
+        <p>Image URL: {{ url }}</p>
+        <img :src="url" alt="Uploaded Image" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      selectedFiles: [],
+      imageUrls: []
+    };
+  },
+  methods: {
+    handleFileUpload(event) {
+      this.selectedFiles = Array.from(event.target.files);
+    },
+    async handleSubmit() {
+      if (!this.selectedFiles.length) {
+        alert('Please select at least one file.');
+        return;
+      }
+
+      this.imageUrls = [];
+      
+      for (const file of this.selectedFiles) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              pinata_api_key: '40f695910735cbbbadfb',
+              pinata_secret_api_key: '2c74a87c1bae18fe0247543d3895ddd99b84bafb334633c59bda952180901c4f'
+            }
+          });
+
+          const url = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
+          this.imageUrls.push(url);
+        } catch (error) {
+          console.error('Error uploading file to Pinata:', error);
+        }
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* Add any styles you need here */
+</style>
