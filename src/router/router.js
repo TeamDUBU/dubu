@@ -9,6 +9,8 @@ import MainLayout from "../views/Layouts/MainLayout.vue";
 
 const HouseInfo = () => import("@/components/HouseInfo");
 const HouseList = () => import("@/components/HouseList");
+const SellList = () => import("@/components/SellList");
+const SellInfo = () => import("@/components/SellInfo");
 Vue.use(VueRouter);
 
 const routes = [
@@ -41,6 +43,17 @@ const routes = [
         path: "/sell",
         name: "sell",
         component: SellView,
+        children: [
+          {
+            name: "Sell-Detail",
+            path: ":TokenId",
+            component: SellInfo,
+          },
+          {
+            path: "",
+            component: SellList,
+          },
+        ],
       },
       {
         path: "/manage",

@@ -1,11 +1,20 @@
 <template>
   <div class="break-words">
     <div class="grid grid-cols-12 gap-2">
-      <button @click="close" class="col-span-1 col-start-12">X</button>
+      <button
+        @click="close"
+        class="col-span-1 col-start-12 text-xl font-extrabold"
+      >
+        X
+      </button>
       <h1 class="text-2xl font-bold mb-4 col-span-12">House Information</h1>
-      <div class="col-span-3 col-start-1 text-xl">Token ID:</div>
+      <div class="col-span-3 col-start-1 text-xl">주소:</div>
       <div class="col-start-4 col-end-13 text-left">
-        {{ this.$route.params.TokenId }}
+        {{ this.info[0].addrToji }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">건물명:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ info[0].note }}
       </div>
       <div class="col-span-3 col-start-1 text-xl">호수:</div>
       <div class="col-start-4 col-end-13 text-left">
@@ -21,7 +30,7 @@
       </div>
       <div class="col-span-3 col-start-1 text-xl">Token ID:</div>
       <div class="col-start-4 col-end-13 text-left">
-        {{ this.info[0].hosu }}
+        {{ this.$route.params.TokenId }}
       </div>
 
       <div class="col-span-8 col-start-3 p-4">

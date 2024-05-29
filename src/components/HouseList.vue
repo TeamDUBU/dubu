@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-3xl py-2">House List</div>
-    <div class="grid grid-cols-12 gap-4">
+    <div class="grid grid-cols-12 gap-4 max-h-screen overflow-y-auto">
       <div
         v-for="item in items"
         :key="item.tokenId"
