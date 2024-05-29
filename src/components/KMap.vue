@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div id="map"></div>
+    <div id="map" class=""></div>
   </div>
 </template>
 
@@ -104,9 +104,12 @@ export default {
       // const markerImage = new window.kakao.maps.MarkerImage(imgSrc, imgSize);
 
       markerData.forEach((data) => {
+        const infowindowContent = `<div style="font-size:16px; width:200px; height:100px;">${
+          (data.address, data.info)
+        }</div>`;
         const infowindow = new window.kakao.maps.InfoWindow({
           removable: true,
-          content: data.address,
+          content: infowindowContent,
         });
         const marker = new window.kakao.maps.Marker({
           position: data.position,

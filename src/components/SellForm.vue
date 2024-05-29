@@ -19,6 +19,17 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {};
+  },
+  computed: {},
+  methods: {
+    ...mapActions(["connectWallet"]),
+  },
+  created() {},
 import axios from "axios";
 import { caver } from "@/utils/caver";
 import { dubuABI, NFTABI } from "@/store/modules/abiInfo";
