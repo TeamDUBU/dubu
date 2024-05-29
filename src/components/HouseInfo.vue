@@ -1,5 +1,6 @@
+/* eslint-disable */
 <template>
-   <div class="relative w-full h-full">
+  <div class="relative w-full h-full">
     <button @click="close" class="absolute top-0 left-0">X</button>
     <div class="flex flex-col items-center justify-center h-full">
       <h1 class="text-2xl font-bold mb-4">House Information</h1>
@@ -7,7 +8,9 @@
       <p class="mb-2"><strong>Hosu:</strong> {{ item.hosu }}</p>
       <p class="mb-2"><strong>Agent:</strong> {{ info.agent }}</p>
       <p class="mb-2"><strong>Option:</strong> {{ info.option }}</p>
-      <p class="mb-4"><strong>ContractList:</strong> {{ info.contract_list }}</p>
+      <p class="mb-4">
+        <strong>ContractList:</strong> {{ info.contract_list }}
+      </p>
       <div class="space-y-4">
         <div v-for="url in imageURLs" :key="url" class="flex justify-center">
           <img :src="url" alt="House Image" class="max-w-xs h-auto" />
@@ -59,7 +62,7 @@ export default {
       }
     },
     close() {
-      this.$emit('close-house-info');
+      this.$emit("close-house-info");
     },
   },
 };

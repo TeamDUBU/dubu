@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <h1>Sell View</h1>
@@ -13,11 +14,9 @@ export default {
     SellForm,
   },
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 

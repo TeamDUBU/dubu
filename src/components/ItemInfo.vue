@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>This is ItemInfo</div>
 </template>

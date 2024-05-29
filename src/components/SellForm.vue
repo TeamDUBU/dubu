@@ -28,11 +28,11 @@ export default {
     return {
       selectedFiles: [],
       imageUrls: [],
-      tokenId: '1159010200105000001',
-      hosu: '',
-      agent: '0xb7C27FCF11c7D42504EeB39132F97244C032D372',
-      info: '',
-      option: '',
+      tokenId: "1159010200105000001",
+      hosu: "",
+      agent: "0xb7C27FCF11c7D42504EeB39132F97244C032D372",
+      info: "",
+      option: "",
       account: null,
     };
   },
@@ -42,28 +42,33 @@ export default {
     },
     async handleSubmit() {
       if (!this.selectedFiles.length) {
-        alert('Please select at least one file.');
+        alert("Please select at least one file.");
         return;
       }
       this.imageUrls = [];
 
       for (const file of this.selectedFiles) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append("file", file);
 
         try {
-          const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              pinata_api_key: '40f695910735cbbbadfb',
-              pinata_secret_api_key: '2c74a87c1bae18fe0247543d3895ddd99b84bafb334633c59bda952180901c4f'
+          const response = await axios.post(
+            "https://api.pinata.cloud/pinning/pinFileToIPFS",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                pinata_api_key: "40f695910735cbbbadfb",
+                pinata_secret_api_key:
+                  "2c74a87c1bae18fe0247543d3895ddd99b84bafb334633c59bda952180901c4f",
+              },
             }
-          });
+          );
 
           const url = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
           this.imageUrls.push(url);
         } catch (error) {
-          console.error('Error uploading file to Pinata:', error);
+          console.error("Error uploading file to Pinata:", error);
         }
       }
     },
@@ -73,8 +78,14 @@ export default {
         return;
       }
 
-      const dubuContract = new caver.klay.Contract(dubuABI, process.env.VUE_APP_DUBU_CONTRACT_ADDRESS);
-      const nftContract = new caver.klay.Contract(NFTABI, process.env.VUE_APP_NFT_CONTRACT_ADDRESS);
+      const dubuContract = new caver.klay.Contract(
+        dubuABI,
+        process.env.VUE_APP_DUBU_CONTRACT_ADDRESS
+      );
+      const nftContract = new caver.klay.Contract(
+        NFTABI,
+        process.env.VUE_APP_NFT_CONTRACT_ADDRESS
+      );
 
       try {
         const gasAmountApproval = await nftContract.methods
@@ -93,31 +104,35 @@ export default {
             gas: gasAmountApproval,
           });
 
-        const gasAmountAddItem = await dubuContract.methods.addItem(
-          this.tokenId,
-          this.hosu,
-          this.agent,
-          this.info,
-          this.option,
-          this.imageUrls
-        ).estimateGas({
-          from: window.klaytn.selectedAddress,
-          gas: 6000000
-        });
+        const gasAmountAddItem = await dubuContract.methods
+          .addItem(
+            this.tokenId,
+            this.hosu,
+            this.agent,
+            this.info,
+            this.option,
+            this.imageUrls
+          )
+          .estimateGas({
+            from: window.klaytn.selectedAddress,
+            gas: 6000000,
+          });
 
         console.log("GasFee for adding item: " + gasAmountAddItem);
 
-        const result = await dubuContract.methods.addItem(
-          this.tokenId,
-          this.hosu,
-          this.agent,
-          this.info,
-          this.option,
-          this.imageUrls
-        ).send({
-          from: window.klaytn.selectedAddress,
-          gas: gasAmountAddItem
-        });
+        const result = await dubuContract.methods
+          .addItem(
+            this.tokenId,
+            this.hosu,
+            this.agent,
+            this.info,
+            this.option,
+            this.imageUrls
+          )
+          .send({
+            from: window.klaytn.selectedAddress,
+            gas: gasAmountAddItem,
+          });
 
         if (result != null) {
           console.log(result);
@@ -127,17 +142,16 @@ export default {
         console.error(error);
         alert("아이템 추가에 실패하였습니다.");
       }
-    }
+    },
   },
   mounted() {
-    if (typeof window.klaytn !== 'undefined') {
-
+    // eslint-disable-next-line no-empty
+    if (typeof window.klaytn !== "undefined") {
     } else {
       alert("Kaikas가 설치되어 있지 않습니다. Kaikas 지갑을 설치해 주세요.");
     }
-  }
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style></style>

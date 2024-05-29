@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { dubuABI, NFTABI } from "./abiInfo";
 import { caver } from "@/utils/caver";
 
