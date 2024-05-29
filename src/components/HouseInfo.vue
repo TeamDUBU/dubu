@@ -1,71 +1,75 @@
 <template>
   <div class="break-words">
-    <div class="grid grid-cols-12 grid-rows-12">
-      <h1 class="text-2xl font-bold mb-4 col-span-12 row-span-1">
-        House Information
-      </h1>
-      <button @click="close" class="col-span-1 col-start-12 row-span-1">
-        X
-      </button>
-      <div class="flex flex-col items-center justify-center h-full">
-        <p><strong>Token ID:</strong> {{ this.$route.params.TokenId }}</p>
-        <p><strong>Hosu:</strong> {{ this.$route.params.Hosu }}</p>
-        <p class="mb-2"><strong>Agent:</strong> {{ this.info.agent }}</p>
-        <p class="mb-2"><strong>Option:</strong> {{ this.info.option }}</p>
-        <p class="mb-4">
-          <strong>ContractList:</strong> {{ this.info.contract_list }}
-        </p>
-        <div class="space-y-4">
-          <div v-for="url in imageURLs" :key="url" class="flex justify-center">
-            <img :src="url" alt="House Image" class="max-w-xs h-auto" />
-          </div>
-        </div>
+    <div class="grid grid-cols-12 gap-2">
+      <button @click="close" class="col-span-1 col-start-12">X</button>
+      <h1 class="text-2xl font-bold mb-4 col-span-12">House Information</h1>
+      <div class="col-span-3 col-start-1 text-xl">Token ID:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.$route.params.TokenId }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">호수:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ info[0].hosu }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">옵션:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].option }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">특약 내용:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].contract_list[1] }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">Token ID:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].hosu }}
+      </div>
+
+      <div class="col-span-8 col-start-3 p-4">
+        <carousel :perPage="1" navigationEnabled>
+          <slide v-for="link in info[0].url" :key="link">
+            <img :src="link" alt="House Image" class="w-full h-auto" />
+          </slide>
+        </carousel>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { mapState } from 'vuex';
+import { mapState } from "vuex";
 import { DUBU } from "@/utils/caver";
+import { Carousel, Slide } from "@jambonn/vue-carousel";
+import "@jambonn/vue-carousel/dist/index.css";
 
 export default {
   name: "HouseInfo",
+  components: {
+    Carousel,
+    Slide,
+  },
   data() {
     return {
       info: [],
-      imageURLs: [],
     };
   },
+  computed: {
+    ...mapState("dbInfo", ["items"]),
+  },
   async created() {
-    await this.fetchItemDetails();
+    this.filterItems();
   },
   methods: {
-    async fetchItemDetails() {
-      try {
-        const result = await DUBU.methods
-          .item_list(this.$route.params.TokenId, this.$route.params.Hosu)
-          .call();
-        this.info = result;
-        const imageUrlResult = await DUBU.methods
-          .getUrlList(this.info.tokenId, this.info.hosu)
-          .call();
-        this.imageURLs = imageUrlResult;
-      } catch (error) {
-        console.error(error);
-      }
-    },
     async click() {
       try {
-        console.log(Number(this.info.hosu));
+        console.log(Number(this.items.hosu));
         console.log(window.klaytn.selectedAddress);
-        console.log(this.info.tokenId);
-        console.log(this.info.agent);
+        console.log(this.items.tokenId);
+        console.log(this.items.agent);
         await DUBU.methods
           .addItem(
-            this.info.tokenId,
-            Number(this.info.hosu),
-            this.info.agent,
+            this.items.tokenId,
+            Number(this.items.hosu),
+            this.items.agent,
             "hi",
             "hi",
             []
@@ -78,10 +82,15 @@ export default {
         console.error(error);
       }
     },
+    filterItems() {
+      this.info = this.items.filter(
+        (item) =>
+          item.tokenId === this.$route.params.TokenId &&
+          item.hosu === this.$route.params.Hosu
+      );
+    },
     close() {
-      this.$router.go({
-        name: "MainView",
-      });
+      this.$router.replace({ path: "/main" });
     },
   },
 };
