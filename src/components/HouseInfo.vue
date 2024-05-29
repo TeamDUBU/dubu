@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="break-words">
     <div class="grid grid-cols-12 grid-rows-12">

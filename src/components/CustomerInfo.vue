@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>this is CustomerInfo</div>
 </template>

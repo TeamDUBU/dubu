@@ -1,3 +1,5 @@
+/* KMap.vue */
+
 <template>
   <div>
     <div id="map" class=""></div>

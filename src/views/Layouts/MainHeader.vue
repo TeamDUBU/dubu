@@ -28,6 +28,7 @@
             @keyup.enter="search(searchItem)"
             class="bg-gray-200 rounded-xl border-gray-50 border-2 px-10 "/>
           </div> -->
+        <!-- <p>Image URL: {{ url }}</p> -->
 
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
         <ul

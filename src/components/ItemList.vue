@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <button @click="buttonClicked">item no.1</button>

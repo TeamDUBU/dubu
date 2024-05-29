@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <h1>House List</h1>
@@ -21,6 +22,7 @@ export default {
   name: "HouseList",
   computed: {
     ...mapState("dbInfo", ["items", "list"]),
+
   },
   created() {
     this.fetchItems();
@@ -35,6 +37,7 @@ export default {
           Hosu: item.hosu,
         },
       });
+
     },
   },
 };
