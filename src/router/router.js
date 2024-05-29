@@ -8,6 +8,7 @@ import TAView from "../views/TransactionView.vue";
 import MainLayout from "../views/Layouts/MainLayout.vue";
 
 const HouseInfo = () => import("@/components/HouseInfo");
+const HouseList = () => import("@/components/HouseList");
 Vue.use(VueRouter);
 
 const routes = [
@@ -30,10 +31,10 @@ const routes = [
             path: ":TokenId/:Hosu",
             component: HouseInfo,
           },
-          // {
-          //   path: "",
-          //   component: MainView,
-          // },
+          {
+            path: "",
+            component: HouseList,
+          },
         ],
       },
       {

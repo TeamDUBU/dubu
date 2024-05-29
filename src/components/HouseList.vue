@@ -1,9 +1,12 @@
 <template>
   <div>
     <h1>House List</h1>
-    <ul>
-      <li v-for="item in items" :key="item.tokenId">
-        <button @click="goNFTInfo(item)">
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <li v-for="item in items" :key="item.tokenId" class="flex justify-center">
+        <button
+          @click="goNFTInfo(item)"
+          class="bg-ivory-500 rounded-md shadow-md"
+        >
           Token ID: {{ item.tokenId }}, Hosu: {{ item.hosu }}
         </button>
       </li>
