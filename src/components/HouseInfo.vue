@@ -1,47 +1,98 @@
 <template>
-  <div>
-    <h1>House Information</h1>
-    <p><strong>Token ID:</strong> {{ item.tokenId }}</p>
-    <p><strong>Hosu:</strong> {{ item.hosu }}</p>
-    <p><strong>Agent:</strong> {{ agent }}</p>
-    <p><strong>Option:</strong> {{ option }}</p>
-    <p><strong>ContractList:</strong> {{ contract_list }}</p>
+  <div class="break-words">
+    <div class="grid grid-cols-12 gap-2">
+      <button @click="close" class="col-span-1 col-start-12">X</button>
+      <h1 class="text-2xl font-bold mb-4 col-span-12">House Information</h1>
+      <div class="col-span-3 col-start-1 text-xl">Token ID:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.$route.params.TokenId }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">호수:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ info[0].hosu }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">옵션:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].option }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">특약 내용:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].contract_list[1] }}
+      </div>
+      <div class="col-span-3 col-start-1 text-xl">Token ID:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].hosu }}
+      </div>
 
+      <div class="col-span-8 col-start-3 p-4">
+        <carousel :perPage="1" navigationEnabled>
+          <slide v-for="link in info[0].url" :key="link">
+            <img :src="link" alt="House Image" class="w-full h-auto" />
+          </slide>
+        </carousel>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import { mapState } from 'vuex';
-import { caver } from '@/utils/caver';
-import { dubuABI } from '@/store/modules/abiInfo';
+import { mapState } from "vuex";
+import { DUBU } from "@/utils/caver";
+import { Carousel, Slide } from "@jambonn/vue-carousel";
+import "@jambonn/vue-carousel/dist/index.css";
 
 export default {
-  name: 'HouseInfo',
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
+  name: "HouseInfo",
+  components: {
+    Carousel,
+    Slide,
   },
   data() {
     return {
-      info: []
+      info: [],
     };
   },
+  computed: {
+    ...mapState("dbInfo", ["items"]),
+  },
   async created() {
-    await this.fetchItemDetails();
+    this.filterItems();
   },
   methods: {
-    async fetchItemDetails() {
+    async click() {
       try {
-        const contract = new caver.klay.Contract(dubuABI, process.env.VUE_APP_DUBU_CONTRACT_ADDRESS);
-        const result = await contract.methods.item_list(this.item.tokenId, this.item.hosu).call();
-        this.info = result;
+        console.log(Number(this.items.hosu));
+        console.log(window.klaytn.selectedAddress);
+        console.log(this.items.tokenId);
+        console.log(this.items.agent);
+        await DUBU.methods
+          .addItem(
+            this.items.tokenId,
+            Number(this.items.hosu),
+            this.items.agent,
+            "hi",
+            "hi",
+            []
+          )
+          .send({
+            from: window.klaytn.selectedAddress,
+            gas: 3000000,
+          });
       } catch (error) {
         console.error(error);
       }
-    }
-  }
+    },
+    filterItems() {
+      this.info = this.items.filter(
+        (item) =>
+          item.tokenId === this.$route.params.TokenId &&
+          item.hosu === this.$route.params.Hosu
+      );
+    },
+    close() {
+      this.$router.replace({ path: "/main" });
+    },
+  },
 };
 </script>
 

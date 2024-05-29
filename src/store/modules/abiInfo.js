@@ -231,6 +231,11 @@ const dubuABI = [
         name: "date",
         type: "string",
       },
+      {
+        internalType: "uint256",
+        name: "count",
+        type: "uint256",
+      },
     ],
     stateMutability: "view",
     type: "function",
@@ -1102,6 +1107,19 @@ const NFTABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getTokensListAll",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -1363,13 +1381,8 @@ const NFTABI = [
         type: "address",
       },
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
         internalType: "string",
-        name: "_addrToji",
+        name: "tokenId",
         type: "string",
       },
       {
@@ -1474,10 +1487,34 @@ const NFTABI = [
         name: "_price",
         type: "uint48",
       },
+      {
+        internalType: "address",
+        name: "_newOwner",
+        type: "address",
+      },
     ],
     name: "setOwner",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "s",
+        type: "string",
+      },
+    ],
+    name: "stringToUint",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "pure",
     type: "function",
   },
   {
@@ -1507,6 +1544,25 @@ const NFTABI = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "tokenListArray",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -1613,4 +1669,4 @@ const NFTABI = [
   },
 ];
 
-export {dubuABI, NFTABI}
+export { dubuABI, NFTABI };

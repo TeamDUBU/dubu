@@ -7,22 +7,35 @@ import SellView from "../views/SellView.vue";
 import TAView from "../views/TransactionView.vue";
 import MainLayout from "../views/Layouts/MainLayout.vue";
 
+const HouseInfo = () => import("@/components/HouseInfo");
+const HouseList = () => import("@/components/HouseList");
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: HomeView,
-  },
-  {
-    path: "/main",
     component: MainLayout,
     children: [
+      {
+        path: "/",
+        name: "Home",
+        component: HomeView,
+      },
       {
         path: "/main",
         name: "main",
         component: MainView,
+        children: [
+          {
+            name: "House-Detail",
+            path: ":TokenId/:Hosu",
+            component: HouseInfo,
+          },
+          {
+            path: "",
+            component: HouseList,
+          },
+        ],
       },
       {
         path: "/sell",

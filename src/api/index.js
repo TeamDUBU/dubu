@@ -1,7 +1,7 @@
 import axios from "axios";
 
-function fetch() {
-  return axios.get(`${process.env.VUE_APP_BASE_URL}/data/all`);
+function fetchMain() {
+  return axios.get(`${process.env.VUE_APP_BASE_URL}/main/`);
 }
 
 function fetchBanner() {
@@ -16,4 +16,4 @@ function fetchSellItem() {
   return axios.get(`${process.env.VUE_APP_BASE_URL}/recentlySell`);
 }
 
-export { fetch, fetchBanner, fetchNewItem, fetchSellItem };
+export { fetchMain, fetchBanner, fetchNewItem, fetchSellItem };
