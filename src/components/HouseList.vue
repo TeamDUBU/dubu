@@ -3,7 +3,7 @@
     <h1>House List</h1>
     <ul>
       <li v-for="item in items" :key="item.tokenId">
-        <button @click="buttonClicked(item)">
+        <button @click="goNFTInfo(item)">
           Token ID: {{ item.tokenId }}, Hosu: {{ item.hosu }}
         </button>
       </li>
@@ -12,22 +12,28 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
 export default {
-  name: 'HouseList',
+  name: "HouseList",
   computed: {
-    ...mapState('dbInfo', ['items'])
+    ...mapState("dbInfo", ["items", "list"]),
   },
   created() {
     this.fetchItems();
   },
   methods: {
-    ...mapActions('dbInfo', ['fetchItems']),
-    buttonClicked(item) {
-      this.$emit("button-click", item);
+    ...mapActions("dbInfo", ["fetchItems"]),
+    goNFTInfo(item) {
+      this.$router.push({
+        name: "House-Detail",
+        params: {
+          TokenId: item.tokenId,
+          Hosu: item.hosu,
+        },
+      });
     },
-  }
+  },
 };
 </script>
 

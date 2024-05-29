@@ -1,5 +1,6 @@
 <template>
   <div class="flex">
+    <router-view></router-view>
     <!-- Conditionally render HouseList or HouseInfo -->
     <house-list
       v-if="!showHouseInfo"

@@ -70,7 +70,6 @@ export default {
   data() {
     return {
       isMenuOpen: false,
-      isLaunchpadOpen: false,
       showMenu: false,
       items: [
         {
@@ -105,9 +104,6 @@ export default {
     ...mapActions(["connectWallet"]),
     closeMenu() {
       this.isMenuOpen = false;
-    },
-    closeLaunchpad() {
-      this.isLaunchpadOpen = false;
     },
     // search(searchItem) {
     //     this.$router.push({

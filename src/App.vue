@@ -14,7 +14,7 @@ export default {
       return this.$store.state.wallet.isConnected;
     },
   },
-  moounted() {
+  mounted() {
     const Toast = this.$swal.mixin({
       toast: true,
       position: "top-start",

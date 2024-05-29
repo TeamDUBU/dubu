@@ -1,31 +1,30 @@
 <template>
-  <div>
+  <div class="break-words">
     <h1>House Information</h1>
-    <p><strong>Token ID:</strong> {{ item.tokenId }}</p>
-    <p><strong>Hosu:</strong> {{ item.hosu }}</p>
-    <p><strong>Agent:</strong> {{ agent }}</p>
-    <p><strong>Option:</strong> {{ option }}</p>
-    <p><strong>ContractList:</strong> {{ contract_list }}</p>
-
+    <p><strong>Token ID:</strong> {{ this.$route.params.TokenId }}</p>
+    <p><strong>Hosu:</strong> {{ this.$route.params.Hosu }}</p>
+    <!-- <p><strong>Agent:</strong> {{ this.info.agent }}</p>
+    <p><strong>Option:</strong> {{ this.info.option }}</p>
+    <p><strong>ContractList:</strong> {{ this.info.contract_list }}</p> -->
+    <div><button @click="click()">클릭</button></div>
   </div>
 </template>
 
 <script>
 // import { mapState } from 'vuex';
-import { caver } from '@/utils/caver';
-import { dubuABI } from '@/store/modules/abiInfo';
+import { DUBU } from "@/utils/caver";
 
 export default {
-  name: 'HouseInfo',
+  name: "HouseInfo",
   props: {
     item: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      info: []
+      info: [],
     };
   },
   async created() {
@@ -34,14 +33,38 @@ export default {
   methods: {
     async fetchItemDetails() {
       try {
-        const contract = new caver.klay.Contract(dubuABI, process.env.VUE_APP_DUBU_CONTRACT_ADDRESS);
-        const result = await contract.methods.item_list(this.item.tokenId, this.item.hosu).call();
+        const result = await DUBU.methods
+          .item_list(this.item.tokenId, this.item.hosu)
+          .call();
         this.info = result;
       } catch (error) {
         console.error(error);
       }
-    }
-  }
+    },
+    async click() {
+      try {
+        console.log(Number(this.info.hosu));
+        console.log(window.klaytn.selectedAddress);
+        console.log(this.info.tokenId);
+        console.log(this.info.agent);
+        await DUBU.methods
+          .addItem(
+            this.info.tokenId,
+            Number(this.info.hosu),
+            this.info.agent,
+            "hi",
+            "hi",
+            []
+          )
+          .send({
+            from: window.klaytn.selectedAddress,
+            gas: 3000000,
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
 };
 </script>
 
