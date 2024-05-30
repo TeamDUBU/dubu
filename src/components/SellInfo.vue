@@ -1,5 +1,5 @@
 <template>
-  <div class="break-words">
+  <div class="break-words pt-16">
     <div class="grid grid-cols-12 gap-2">
       <button
         @click="close"

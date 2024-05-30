@@ -4,13 +4,16 @@ import HomeView from "../views/HomeView.vue";
 import ETView from "../views/EstatorView.vue";
 import MainView from "../views/MainView.vue";
 import SellView from "../views/SellView.vue";
-import TAView from "../views/TransactionView.vue";
+// import TAView from "../views/TransactionView.vue";
 import MainLayout from "../views/Layouts/MainLayout.vue";
 
 const HouseInfo = () => import("@/components/HouseInfo");
 const HouseList = () => import("@/components/HouseList");
 const SellList = () => import("@/components/SellList");
 const SellInfo = () => import("@/components/SellInfo");
+const ItemList = () => import("@/components/ItemList");
+const ItemInfo = () => import("@/components/ItemInfo");
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -25,7 +28,7 @@ const routes = [
       },
       {
         path: "/main",
-        name: "main",
+        // name: "main",
         component: MainView,
         children: [
           {
@@ -41,7 +44,7 @@ const routes = [
       },
       {
         path: "/sell",
-        name: "sell",
+        // name: "sell",
         component: SellView,
         children: [
           {
@@ -57,15 +60,21 @@ const routes = [
       },
       {
         path: "/manage",
-        name: "manage",
+        // name: "manage",
         component: ETView,
+        children: [
+          {
+            name: "Item-Detail",
+            path: ":TokenId",
+            component: ItemInfo,
+          },
+          {
+            path: "",
+            component: ItemList,
+          },
+        ],
       },
     ],
-  },
-  {
-    path: "/transaction",
-    name: "trans",
-    component: TAView,
   },
 ];
 

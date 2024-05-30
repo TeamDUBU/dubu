@@ -8,12 +8,14 @@ function fetchSell(payload) {
   return axios.get(`${process.env.VUE_APP_BASE_URL}/sell/${payload.Address}`);
 }
 
-function fetchNewItem() {
-  return axios.get(`${process.env.VUE_APP_BASE_URL}/newItem`);
+function fetchManage(payload) {
+  return axios.get(
+    `${process.env.VUE_APP_BASE_URL}/manage/customerlist/${payload.Address}`
+  );
 }
 
 function fetchSellItem() {
   return axios.get(`${process.env.VUE_APP_BASE_URL}/recentlySell`);
 }
 
-export { fetchMain, fetchSell, fetchNewItem, fetchSellItem };
+export { fetchMain, fetchSell, fetchManage, fetchSellItem };

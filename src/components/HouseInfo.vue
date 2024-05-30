@@ -3,11 +3,11 @@
     <div class="grid grid-cols-12 gap-2">
       <button
         @click="close"
-        class="col-span-1 col-start-12 text-xl font-extrabold"
+        class="col-span-1 col-start-12 text-xl font-extrabold pt-16"
       >
         X
       </button>
-      <h1 class="text-2xl font-bold mb-4 col-span-12">House Information</h1>
+      <h1 class="text-2xl font-bold my-8 col-span-12">House Information</h1>
       <div class="col-span-3 col-start-1 text-xl">주소:</div>
       <div class="col-start-4 col-end-13 text-left">
         {{ this.info[0].addrToji }}
@@ -33,10 +33,15 @@
         {{ this.$route.params.TokenId }}
       </div>
 
-      <div class="col-span-8 col-start-3 p-4">
-        <carousel :perPage="1" navigationEnabled>
+      <div class="col-span-8 col-start-3 pt-12">
+        <carousel
+          :perPage="this.option.perPage"
+          :loop="this.option.loop"
+          :navigationEnabled="this.option.navigationEnabled"
+          :centerMode="this.option.centerMode"
+        >
           <slide v-for="link in info[0].url" :key="link">
-            <img :src="link" alt="House Image" class="w-full h-auto" />
+            <img :src="link" alt="House Image" class="w-full h-64" />
           </slide>
         </carousel>
       </div>
@@ -59,6 +64,13 @@ export default {
   data() {
     return {
       info: [],
+      option: {
+        perPage: 1,
+        navigationEnabled: true,
+        loop: true,
+        centerMode: true,
+        spacePadding: 4,
+      },
     };
   },
   computed: {
