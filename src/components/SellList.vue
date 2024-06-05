@@ -8,7 +8,7 @@
         class="col-span-6 flex flex-col items-center p-4 bg-white rounded-lg shadow-md"
       >
         <img
-          :src="item.url"
+          :src="item.url.Thumbnail"
           alt="House Image"
           class="w-full h-48 object-cover rounded-t-lg"
         />
@@ -41,12 +41,22 @@ export default {
     ...mapState("dbInfo", ["item_list"]),
   },
   created() {
+    this.fetchManageItems({
+      Address: window.klaytn.selectedAddress,
+    });
     this.InitMetadata({
       Address: window.klaytn.selectedAddress,
     });
+    this.fetchManageLists();
+    this.fetchItems();
   },
   methods: {
-    ...mapActions("dbInfo", ["InitMetadata"]),
+    ...mapActions("dbInfo", [
+      "InitMetadata",
+      "fetchManageLists",
+      "fetchManageItems",
+      "fetchItems",
+    ]),
     goNFTInfo(item) {
       this.$router.push({
         name: "Sell-Detail",

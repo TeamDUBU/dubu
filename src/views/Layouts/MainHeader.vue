@@ -3,7 +3,7 @@
     <div class="bg-gray-200">
       <nav class="mx-0 py-2 md:flex md:items-center md:justify-between">
         <div class="flex items-center justify-between">
-          <router-link to="/">
+          <router-link to="/main">
             <img class="mx-4 h-10" src="@/assets/logo.png"
           /></router-link>
           <!-- Mobile menu button -->

@@ -71,9 +71,46 @@ const dubuABI = [
         type: "string",
       },
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "priceMonth",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "priceLent",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "manageFee",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "parking",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "elevator",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pet",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "fullOpt",
+            type: "bool",
+          },
+        ],
+        internalType: "struct DUBU.Option",
         name: "_option",
-        type: "string",
+        type: "tuple",
       },
       {
         internalType: "string[]",
@@ -151,14 +188,51 @@ const dubuABI = [
         type: "uint8",
       },
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "priceMonth",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "priceLent",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "manageFee",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "parking",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "elevator",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pet",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "fullOpt",
+            type: "bool",
+          },
+        ],
+        internalType: "struct DUBU.Option",
         name: "option",
-        type: "string",
+        type: "tuple",
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "uint48",
+        name: "time",
+        type: "uint48",
       },
       {
         components: [
@@ -408,14 +482,51 @@ const dubuABI = [
         type: "uint8",
       },
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "priceMonth",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "priceLent",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "manageFee",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "parking",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "elevator",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pet",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "fullOpt",
+            type: "bool",
+          },
+        ],
+        internalType: "struct DUBU.Option",
         name: "option",
-        type: "string",
+        type: "tuple",
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "uint48",
+        name: "time",
+        type: "uint48",
       },
       {
         components: [
@@ -461,7 +572,7 @@ const dubuABI = [
         type: "uint256",
       },
     ],
-    name: "removePairByIndex",
+    name: "removePair",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1114,6 +1225,41 @@ const NFTABI = [
         internalType: "uint256[]",
         name: "",
         type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getURL",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string[]",
+            name: "realEstate",
+            type: "string[]",
+          },
+          {
+            internalType: "string[]",
+            name: "toji",
+            type: "string[]",
+          },
+          {
+            internalType: "string[]",
+            name: "building",
+            type: "string[]",
+          },
+          {
+            internalType: "string",
+            name: "Thumbnail",
+            type: "string",
+          },
+        ],
+        internalType: "struct ProtoDUBU.URL",
+        name: "",
+        type: "tuple",
       },
     ],
     stateMutability: "view",

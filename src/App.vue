@@ -33,7 +33,7 @@ export default {
         text: "Chrome에서 카이카스 지갑 설치후 사용하실수 있습니다",
       });
     } else {
-      if (!this.isConnected) {
+      if (!this.isConnected()) {
         Toast.fire({
           icon: "warning",
           title: "지갑이 연결되지 않았습니다.",
@@ -42,6 +42,7 @@ export default {
       }
     }
   },
+  created() {},
 };
 </script>
 

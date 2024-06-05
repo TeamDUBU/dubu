@@ -1,3 +1,5 @@
+/* KMap.vue */
+
 <template>
   <div>
     <div id="map" class=""></div>
@@ -5,14 +7,18 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "KakaoMap",
   data() {
     return {
       map: null,
       markers: [],
+      kmap: [],
     };
   },
+  computed: {},
   setup() {},
   created() {},
   mounted() {
@@ -27,7 +33,7 @@ export default {
     loadScript() {
       const script = document.createElement("script");
       script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=51c8deb15f0bd6288cc9e5cf4fe0ce2d&autoload=false";
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=51c8deb15f0bd6288cc9e5cf4fe0ce2d&autoload=false&libraries=services";
       script.onload = () => window.kakao.maps.load(this.loadMap);
 
       document.head.appendChild(script);
@@ -44,93 +50,120 @@ export default {
       this.map = new window.kakao.maps.Map(container, options);
       this.loadMarker();
     },
-    loadMarker() {
-      const markerData = [
-        {
-          position: new window.kakao.maps.LatLng(
-            37.49510050970545,
-            126.9552358189143
-          ),
-          address: "서울특별시 동작구 상도동 500-1",
-          info: "A 빌라",
-        },
-        {
-          position: new window.kakao.maps.LatLng(
-            37.4953116518421,
-            126.95565723681904
-          ),
-          address: "서울특별시 동작구 상도동 502-8",
-          info: "A 원룸",
-        },
-        {
-          position: new window.kakao.maps.LatLng(
-            37.49430461998719,
-            126.95874342129322
-          ),
-          address: "서울특별시 동작구 상도동 507-4",
-          info: "A 오피스텔",
-        },
-        {
-          position: new window.kakao.maps.LatLng(
-            37.493936539631065,
-            126.95940251494538
-          ),
-          address: "서울특별시 동작구 상도동 412-0",
-          info: "A 아파트",
-        },
-        {
-          position: new window.kakao.maps.LatLng(
-            37.49511484557149,
-            126.95690171968508
-          ),
-          address: "서울특별시 동작구 상도동 505-5",
-          info: "A 빌딩",
-        },
-        {
-          position: new window.kakao.maps.LatLng(
-            37.49502441963266,
-            126.95530256733295
-          ),
-          adress: "서울특별시 동작구 상도동 500-2",
-          info: "B 빌라",
-        },
-        // 추가로 필요한 위치와 제목을 여기에 추가
-      ];
+    async loadMarker() {
+      try {
+        const response = await axios.get(`http://localhost:3000/main/kmap`);
+        const markerData = response.data;
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        const processedAddresses = new Set(); // 중복 주소를 추적하기 위한 Set
 
-      // const imgSrc = "./assets/pick.png";
-      // const imgSize = new window.kakao.maps.Size(64, 69);
-      // const markerImage = new window.kakao.maps.MarkerImage(imgSrc, imgSize);
+        // 모든 주소 검색을 Promise로 처리하여 비동기 문제 해결
+        const addressPromises = markerData.map((datas) => {
+          return new Promise((resolve, reject) => {
+            if (processedAddresses.has(datas.addr)) {
+              // 중복된 주소는 무시
+              resolve(null);
+            } else {
+              geocoder.addressSearch(datas.addr, (result, status) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                  processedAddresses.add(datas.addr); // 처리된 주소를 Set에 추가
+                  resolve({
+                    address: datas.addr,
+                    note: datas.note,
+                    price: datas.price,
+                    hosu: datas.hosu,
+                    position: [result[0].y, result[0].x],
+                  });
+                } else {
+                  reject(`Geocode error: ${status}`);
+                }
+              });
+            }
+          });
+        });
 
-      markerData.forEach((data) => {
-        const infowindowContent = `<div style="font-size:16px; width:200px; height:100px;">${
-          (data.address, data.info)
-        }</div>`;
-        const infowindow = new window.kakao.maps.InfoWindow({
-          removable: true,
-          content: infowindowContent,
+        // 모든 주소 검색이 완료될 때까지 기다림
+        let mD = await Promise.all(addressPromises);
+        // null 값을 필터링하여 유효한 데이터만 남김
+        mD = mD.filter((item) => item !== null);
+
+        var imageSrc =
+            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 마커이미지의 주소입니다
+          imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+          imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        var markerImage = new window.kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
+
+        // mD 배열을 순회하며 마커 생성
+        mD.forEach((datas) => {
+          const latLng = new window.kakao.maps.LatLng(
+            datas.position[0],
+            datas.position[1]
+          );
+
+          const infowindowContent = `
+      <div style="font-size:14px; width:220px; height:100px; text-align:left;">
+        <div>주소 : ${datas.address}</div>
+        <div>건물명 : ${datas.note}</div>
+        <div>가격 : ${datas.price}</div>
+      </div>`;
+          const infowindow = new window.kakao.maps.InfoWindow({
+            content: infowindowContent,
+            removable: false, // 끄는 버튼을 없앱니다
+          });
+
+          const marker = new window.kakao.maps.Marker({
+            position: latLng,
+            address: datas.address,
+            note: datas.note,
+            price: datas.price,
+            hosu: datas.hosu,
+            image: markerImage,
+          });
+          marker.setMap(this.map);
+
+          window.kakao.maps.event.addListener(marker, "click", () => {
+            // 기존 infowindow를 모두 닫음
+            this.markers.forEach((m) => {
+              if (m.infowindow) {
+                m.infowindow.close();
+              }
+            });
+
+            // 새로운 infowindow 생성 및 표시
+            const newInfowindowContent = `
+        <div style="font-size:14px; width:220px; height:100px; text-align:left;">
+          <div>등록된 호수 : ${datas.hosu}</div>
+        </div>`;
+            const newInfowindow = new window.kakao.maps.InfoWindow({
+              content: newInfowindowContent,
+              removable: true,
+            });
+            newInfowindow.open(this.map, marker);
+            marker.infowindow = newInfowindow; // 마커에 새로운 infowindow를 저장
+
+            const moveLatLon = marker.getPosition();
+            this.map.setCenter(moveLatLon);
+            this.map.setLevel(2);
+          });
+
+          window.kakao.maps.event.addListener(marker, "mouseover", () => {
+            infowindow.open(this.map, marker);
+          });
+
+          window.kakao.maps.event.addListener(marker, "mouseout", () => {
+            infowindow.close();
+          });
+
+          this.markers.push(marker);
         });
-        const marker = new window.kakao.maps.Marker({
-          position: data.position,
-          address: data.address,
-          info: data.info,
-          // image: markerImage,
-        });
-        marker.setMap(this.map);
-        window.kakao.maps.event.addListener(marker, "click", () => {
-          infowindow.open(this.map, marker);
-          // 클릭한 마커의 위치를 가져옴
-          const moveLatLon = marker.getPosition();
-          this.map.setCenter(moveLatLon);
-          this.map.setLevel(2);
-        });
-        window.kakao.maps.event.addListener(marker, "mouseover", () => {
-          infowindow.open(this.map, marker);
-        });
-        window.kakao.maps.event.addListener(marker, "mouseout", () => {
-          infowindow.close(this.map, marker);
-        });
-        this.markers.push(marker);
-      });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

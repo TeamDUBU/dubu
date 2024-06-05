@@ -42,9 +42,19 @@ export default {
     this.fetchManageItems({
       Address: window.klaytn.selectedAddress,
     });
+    this.InitMetadata({
+      Address: window.klaytn.selectedAddress,
+    });
+    this.fetchManageLists();
+    this.fetchItems();
   },
   methods: {
-    ...mapActions("dbInfo", ["fetchManageItems"]),
+    ...mapActions("dbInfo", [
+      "InitMetadata",
+      "fetchManageLists",
+      "fetchManageItems",
+      "fetchItems",
+    ]),
     goManageNFTInfo(item) {
       this.$router.push({
         name: "Item-Detail",

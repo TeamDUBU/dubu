@@ -1,9 +1,10 @@
-import { fetchMain, fetchSell, fetchManage } from "@/api";
+import { fetchMain, fetchSell, fetchManage, fetchManageList } from "@/api";
 
 const state = {
   items: [],
   item_list: [],
   manageItems: [],
+  agents: [],
 };
 
 const getters = {
@@ -20,6 +21,9 @@ const mutations = {
   },
   SET_MANAGEITEMS(state, items) {
     state.manageItems = items;
+  },
+  SET_AGENTS(state, items) {
+    state.agents = items;
   },
 };
 
@@ -42,6 +46,13 @@ const actions = {
     await fetchManage(payload)
       .then((res) => {
         commit("SET_MANAGEITEMS", res.data);
+      })
+      .catch((err) => console.log(err));
+  },
+  async fetchManageLists({ commit }) {
+    await fetchManageList()
+      .then((res) => {
+        commit("SET_AGENTS", res.data);
       })
       .catch((err) => console.log(err));
   },

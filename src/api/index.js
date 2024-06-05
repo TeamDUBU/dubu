@@ -13,9 +13,8 @@ function fetchManage(payload) {
     `${process.env.VUE_APP_BASE_URL}/manage/customerlist/${payload.Address}`
   );
 }
-
-function fetchSellItem() {
-  return axios.get(`${process.env.VUE_APP_BASE_URL}/recentlySell`);
+function fetchManageList() {
+  return axios.get(`${process.env.VUE_APP_BASE_URL}/manage/`);
 }
 
-export { fetchMain, fetchSell, fetchManage, fetchSellItem };
+export { fetchMain, fetchSell, fetchManage, fetchManageList };
