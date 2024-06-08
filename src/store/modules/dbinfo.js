@@ -1,28 +1,80 @@
-import { fetchMain } from "@/api";
+import {
+  fetchMain,
+  fetchSell,
+  fetchManage,
+  fetchManageList,
+  fetchHistory,
+} from "@/api";
 
 const state = {
   items: [],
-  // item_list: [],
+  item_list: [],
+  manageItems: [],
+  agents: [],
+  history: [],
 };
 
 const getters = {
   items: (state) => state.items,
+  manageItems: (state) => state.manageItems,
 };
 
 const mutations = {
   SET_ITEMS(state, items) {
     state.items = items;
   },
-  // SET_LISTS(state, items) {
-  //   state.item_list = items;
-  // },
+  SET_HISTORY(state, items) {
+    state.history = items;
+  },
+  SET_LISTS(state, items) {
+    state.item_list = items;
+  },
+  SET_MANAGEITEMS(state, items) {
+    state.manageItems = items;
+  },
+  SET_AGENTS(state, items) {
+    state.agents = items;
+  },
 };
 
 const actions = {
   async fetchItems({ commit }) {
-    fetchMain()
+    await fetchMain()
       .then((res) => {
         commit("SET_ITEMS", res.data);
+        return res;
+      })
+      .catch((err) => console.log(err));
+  },
+  async InitMetadata({ commit }, payload) {
+    await fetchSell(payload)
+      .then((res) => {
+        commit("SET_LISTS", res.data);
+        return res;
+      })
+      .catch((err) => console.log(err));
+  },
+  async fetchManageItems({ commit }, payload) {
+    await fetchManage(payload)
+      .then((res) => {
+        commit("SET_MANAGEITEMS", res.data);
+        return res;
+      })
+      .catch((err) => console.log(err));
+  },
+  async fetchHistorys({ commit }, payload) {
+    await fetchHistory(payload)
+      .then((res) => {
+        commit("SET_HISTORY", res.data);
+        return res;
+      })
+      .catch((err) => console.log(err));
+  },
+  async fetchManageLists({ commit }) {
+    await fetchManageList()
+      .then((res) => {
+        commit("SET_AGENTS", res.data);
+        return res;
       })
       .catch((err) => console.log(err));
   },

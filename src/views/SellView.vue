@@ -1,15 +1,22 @@
 <template>
   <div class="">
-    <h1 class="text-3xl">This is an sell page</h1>
-    <sell-form />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import SellForm from "@/components/SellForm.vue";
 export default {
-  components: {
-    SellForm,
+  methods: {},
+  data() {
+    return {};
+  },
+  created() {
+    // this.$on("start", this.startSpinner());
+    // this.$on("end", this.stopSpinner());
+  },
+  beforeDestroy() {
+    // this.$off("start-spinner", this.startSpinner);
+    // this.$off("end-spinner", this.stopSpinner);
   },
 };
 </script>

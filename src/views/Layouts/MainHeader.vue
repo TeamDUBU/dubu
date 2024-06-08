@@ -3,7 +3,7 @@
     <div class="bg-gray-200">
       <nav class="mx-0 py-2 md:flex md:items-center md:justify-between">
         <div class="flex items-center justify-between">
-          <router-link to="/">
+          <router-link to="/main">
             <img class="mx-4 h-10" src="@/assets/logo.png"
           /></router-link>
           <!-- Mobile menu button -->
@@ -46,7 +46,7 @@
           <li>
             <div
               @click="connectWallet"
-              v-if="!isConnected"
+              v-if="!this.$store.state.wallet.isConnected"
               class="cursor-pointer rounded-xl bg-gray-100 p-2 hover:bg-gray-300 hover:text-blue-400"
             >
               <p class="px-4">Connect Wallet</p>
@@ -117,7 +117,34 @@ export default {
     // },
   },
   created() {
-    this.connectWallet();
+    this.connectWallet().then(() => {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-start",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+      });
+      if (window.klaytn === undefined) {
+        Toast.fire({
+          icon: "warning",
+          title: "지갑이 연결되지 않았습니다.",
+          text: "Chrome에서 카이카스 지갑 설치후 사용하실수 있습니다",
+        });
+      } else {
+        if (!this.$store.state.wallet.isConnected) {
+          Toast.fire({
+            icon: "warning",
+            title: "지갑이 연결되지 않았습니다.",
+            text: "Chrome에서 카이카스 지갑 설치후 사용하실수 있습니다!!",
+          });
+        }
+      }
+    });
   },
 };
 </script>

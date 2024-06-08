@@ -1,9 +1,7 @@
 <template>
   <div>
     <main-header></main-header>
-    <div class="pt-[51px]">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 

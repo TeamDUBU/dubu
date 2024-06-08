@@ -2,17 +2,6 @@ const dubuABI = [
   {
     inputs: [
       {
-        internalType: "contract ProtoDUBU",
-        name: "_nft",
-        type: "address",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "_account",
         type: "address",
@@ -71,9 +60,46 @@ const dubuABI = [
         type: "string",
       },
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "priceMonth",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "priceLent",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "manageFee",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "parking",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "elevator",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pet",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "fullOpt",
+            type: "bool",
+          },
+        ],
+        internalType: "struct DUBU.Option",
         name: "_option",
-        type: "string",
+        type: "tuple",
       },
       {
         internalType: "string[]",
@@ -90,20 +116,81 @@ const dubuABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "_tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_hosu",
+        type: "uint256",
+      },
+      {
+        internalType: "uint48",
+        name: "_price",
+        type: "uint48",
+      },
+      {
+        internalType: "string",
+        name: "_note",
+        type: "string",
+      },
+    ],
+    name: "buyItem",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_hosu",
         type: "uint256",
       },
     ],
-    name: "agentListArray",
-    outputs: [
+    name: "removePair",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "address",
-        name: "",
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_hosu",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_note",
+        type: "string",
+      },
+    ],
+    name: "setContracts",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "contract ProtoDUBU",
+        name: "_nft",
         type: "address",
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
     inputs: [
@@ -151,14 +238,51 @@ const dubuABI = [
         type: "uint8",
       },
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "priceMonth",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "priceLent",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "manageFee",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "parking",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "elevator",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pet",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "fullOpt",
+            type: "bool",
+          },
+        ],
+        internalType: "struct DUBU.Option",
         name: "option",
-        type: "string",
+        type: "tuple",
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "uint48",
+        name: "time",
+        type: "uint48",
       },
       {
         components: [
@@ -244,23 +368,19 @@ const dubuABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_tokenId",
+        name: "",
         type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_hosu",
-        type: "uint256",
-      },
-      {
-        internalType: "uint48",
-        name: "_price",
-        type: "uint48",
       },
     ],
-    name: "buyItem",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "agentListArray",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -326,43 +446,6 @@ const dubuABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "itemCount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "itemListArray",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "hosu",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -408,14 +491,51 @@ const dubuABI = [
         type: "uint8",
       },
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "priceMonth",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "priceLent",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "manageFee",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "parking",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "elevator",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pet",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "fullOpt",
+            type: "bool",
+          },
+        ],
+        internalType: "struct DUBU.Option",
         name: "option",
-        type: "string",
+        type: "tuple",
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "uint48",
+        name: "time",
+        type: "uint48",
       },
       {
         components: [
@@ -449,44 +569,40 @@ const dubuABI = [
     type: "function",
   },
   {
-    inputs: [
+    inputs: [],
+    name: "itemCount",
+    outputs: [
       {
         internalType: "uint256",
-        name: "_tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_hosu",
+        name: "",
         type: "uint256",
       },
     ],
-    name: "removePairByIndex",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
       {
         internalType: "uint256",
-        name: "_tokenId",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "itemListArray",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_hosu",
+        name: "hosu",
         type: "uint256",
       },
-      {
-        internalType: "string",
-        name: "_note",
-        type: "string",
-      },
     ],
-    name: "setContracts",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
 ];
@@ -1120,6 +1236,41 @@ const NFTABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getURL",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string[]",
+            name: "realEstate",
+            type: "string[]",
+          },
+          {
+            internalType: "string[]",
+            name: "toji",
+            type: "string[]",
+          },
+          {
+            internalType: "string[]",
+            name: "building",
+            type: "string[]",
+          },
+          {
+            internalType: "string",
+            name: "Thumbnail",
+            type: "string",
+          },
+        ],
+        internalType: "struct ProtoDUBU.URL",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -1491,6 +1642,11 @@ const NFTABI = [
         internalType: "address",
         name: "_newOwner",
         type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_note",
+        type: "string",
       },
     ],
     name: "setOwner",
