@@ -32,6 +32,7 @@ const actions = {
     await fetchMain()
       .then((res) => {
         commit("SET_ITEMS", res.data);
+        return res;
       })
       .catch((err) => console.log(err));
   },
@@ -39,6 +40,7 @@ const actions = {
     await fetchSell(payload)
       .then((res) => {
         commit("SET_LISTS", res.data);
+        return res;
       })
       .catch((err) => console.log(err));
   },
@@ -46,6 +48,7 @@ const actions = {
     await fetchManage(payload)
       .then((res) => {
         commit("SET_MANAGEITEMS", res.data);
+        return res;
       })
       .catch((err) => console.log(err));
   },
@@ -53,6 +56,7 @@ const actions = {
     await fetchManageList()
       .then((res) => {
         commit("SET_AGENTS", res.data);
+        return res;
       })
       .catch((err) => console.log(err));
   },

@@ -6,7 +6,18 @@
 
 <script>
 export default {
-  components: {},
+  methods: {},
+  data() {
+    return {};
+  },
+  created() {
+    // this.$on("start", this.startSpinner());
+    // this.$on("end", this.stopSpinner());
+  },
+  beforeDestroy() {
+    // this.$off("start-spinner", this.startSpinner);
+    // this.$off("end-spinner", this.stopSpinner);
+  },
 };
 </script>
 

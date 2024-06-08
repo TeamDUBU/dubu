@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <h1 class="text-3xl">This is an TA page</h1>
+    <router-view></router-view>
   </div>
 </template>
 

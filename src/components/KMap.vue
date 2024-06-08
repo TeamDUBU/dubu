@@ -1,5 +1,3 @@
-/* KMap.vue */
-
 <template>
   <div>
     <div id="map" class=""></div>
@@ -54,6 +52,7 @@ export default {
       try {
         const response = await axios.get(`http://localhost:3000/main/kmap`);
         const markerData = response.data;
+        // console.log(markerData);
         const geocoder = new window.kakao.maps.services.Geocoder();
         const processedAddresses = new Set(); // 중복 주소를 추적하기 위한 Set
 
@@ -71,7 +70,6 @@ export default {
                     address: datas.addr,
                     note: datas.note,
                     price: datas.price,
-                    hosu: datas.hosu,
                     position: [result[0].y, result[0].x],
                   });
                 } else {
@@ -86,17 +84,18 @@ export default {
         let mD = await Promise.all(addressPromises);
         // null 값을 필터링하여 유효한 데이터만 남김
         mD = mD.filter((item) => item !== null);
-
         var imageSrc =
-            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 마커이미지의 주소입니다
-          imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-          imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+            "https://i.postimg.cc/0j1fsBGf/Kakao-Talk-Image-2024-06-08-19-21-02.png", // 마커이미지의 주소입니다
+          imageSize = new window.kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+          imageOption = { offset: new window.kakao.maps.Point(25, 15) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
         var markerImage = new window.kakao.maps.MarkerImage(
           imageSrc,
           imageSize,
           imageOption
         );
+
+        let openInfowindow = null; // 현재 열려 있는 infowindow를 추적
 
         // mD 배열을 순회하며 마커 생성
         mD.forEach((datas) => {
@@ -106,10 +105,10 @@ export default {
           );
 
           const infowindowContent = `
-      <div style="font-size:14px; width:220px; height:100px; text-align:left;">
-        <div>주소 : ${datas.address}</div>
-        <div>건물명 : ${datas.note}</div>
-        <div>가격 : ${datas.price}</div>
+      <div style="font-size:14px; width:220px; text-align:left; padding: 10px;">
+        <div style="text-align:center; font-weight:bold; margin-bottom: 10px;">${datas.note}</div>
+        <div style="margin-bottom: 5px;">주소 : ${datas.address}</div>
+        <div style="margin-bottom: 5px;">가격 : ${datas.price}(단위 : 원 / m2)</div>
       </div>`;
           const infowindow = new window.kakao.maps.InfoWindow({
             content: infowindowContent,
@@ -118,33 +117,59 @@ export default {
 
           const marker = new window.kakao.maps.Marker({
             position: latLng,
+            tokenID: datas.tokenID,
             address: datas.address,
             note: datas.note,
             price: datas.price,
-            hosu: datas.hosu,
             image: markerImage,
           });
+          // console.log(marker);
           marker.setMap(this.map);
 
           window.kakao.maps.event.addListener(marker, "click", () => {
-            // 기존 infowindow를 모두 닫음
-            this.markers.forEach((m) => {
-              if (m.infowindow) {
-                m.infowindow.close();
-              }
-            });
+            // 다른 infowindow가 열려 있는지 확인
+            if (openInfowindow) {
+              return;
+            }
 
-            // 새로운 infowindow 생성 및 표시
+            // 클릭된 마커의 주소에 해당하는 모든 hosu를 찾아서 표시
+            const relevantData = markerData.filter(
+              (item) => item.addr === datas.address
+            );
+            const hosuList = relevantData
+              .map(
+                (item) => `
+          <div style="margin-bottom:10px; display: flex; justify-content: space-between;">
+            <span>호수: ${item.hosu}</span>
+            <button onclick="navigateToHouseInfo('${item.tokenId}', '${item.hosu}')">보러 가기</button>
+          </div>
+        `
+              )
+              .join("");
+            const numHosu = relevantData.length;
+            const maxItemsVisible = 3; // 최대 표시할 항목 수
+            const infowindowHeight =
+              Math.min(numHosu, maxItemsVisible) * 30 + 120; // 기본 높이 + 호수 개수에 따른 높이 조정
+
             const newInfowindowContent = `
-        <div style="font-size:14px; width:220px; height:100px; text-align:left;">
-          <div>등록된 호수 : ${datas.hosu}</div>
+        <div style="font-size:14px; width:220px; height:${infowindowHeight}px; text-align:left; overflow-y:auto; padding: 10px;">
+          <div style="text-align:center; font-weight:bold; margin-bottom: 10px;">${datas.note}</div>
+          <div style="text-align:center; margin-bottom: 10px;">현재 등록된 호수들</div>
+          <hr style="margin-bottom: 10px;">
+          ${hosuList}
+          <div style="text-align:center; margin-top:10px;">
+            <button onclick="closeAllInfowindows()">돌아가기</button>
+          </div>
         </div>`;
+
             const newInfowindow = new window.kakao.maps.InfoWindow({
               content: newInfowindowContent,
-              removable: true,
+              removable: false,
             });
             newInfowindow.open(this.map, marker);
             marker.infowindow = newInfowindow; // 마커에 새로운 infowindow를 저장
+
+            openInfowindow = newInfowindow; // 현재 열려 있는 infowindow로 설정
 
             const moveLatLon = marker.getPosition();
             this.map.setCenter(moveLatLon);
@@ -152,15 +177,32 @@ export default {
           });
 
           window.kakao.maps.event.addListener(marker, "mouseover", () => {
-            infowindow.open(this.map, marker);
+            if (!openInfowindow) {
+              infowindow.open(this.map, marker);
+            }
           });
 
           window.kakao.maps.event.addListener(marker, "mouseout", () => {
-            infowindow.close();
+            if (!openInfowindow) {
+              infowindow.close();
+            }
           });
 
           this.markers.push(marker);
         });
+
+        // 모든 infowindow를 닫는 함수
+        window.closeAllInfowindows = function () {
+          if (openInfowindow) {
+            openInfowindow.close();
+            openInfowindow = null;
+          }
+        };
+
+        // HouseInfo 페이지로 이동하는 함수
+        window.navigateToHouseInfo = (tokenID, hosu) => {
+          this.$router.push(`/main/${tokenID}/${hosu}`);
+        };
       } catch (error) {
         console.log(error);
       }
