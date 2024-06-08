@@ -338,9 +338,9 @@ export default {
     },
     async filterItems() {
       await this.items.forEach((item) => {
-        this.item_list.forEach((listItem) => {
+        this.info.forEach((listItem) => {
           const index = listItem.hosu.indexOf(item.hosu);
-          if (index !== -1) {
+          if (index !== -1 && listItem.tokenId == item.tokenId) {
             listItem.hosu.splice(index, 1);
           }
         });
