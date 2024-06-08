@@ -16,5 +16,10 @@ function fetchManage(payload) {
 function fetchManageList() {
   return axios.get(`${process.env.VUE_APP_BASE_URL}/manage/`);
 }
+function fetchHistory(payload) {
+  return axios.get(
+    `${process.env.VUE_APP_BASE_URL}/purchase/${payload.tokenId}/${payload.hosu}`
+  );
+}
 
-export { fetchMain, fetchSell, fetchManage, fetchManageList };
+export { fetchMain, fetchSell, fetchManage, fetchManageList, fetchHistory };

@@ -1,10 +1,17 @@
-import { fetchMain, fetchSell, fetchManage, fetchManageList } from "@/api";
+import {
+  fetchMain,
+  fetchSell,
+  fetchManage,
+  fetchManageList,
+  fetchHistory,
+} from "@/api";
 
 const state = {
   items: [],
   item_list: [],
   manageItems: [],
   agents: [],
+  history: [],
 };
 
 const getters = {
@@ -15,6 +22,9 @@ const getters = {
 const mutations = {
   SET_ITEMS(state, items) {
     state.items = items;
+  },
+  SET_HISTORY(state, items) {
+    state.history = items;
   },
   SET_LISTS(state, items) {
     state.item_list = items;
@@ -48,6 +58,14 @@ const actions = {
     await fetchManage(payload)
       .then((res) => {
         commit("SET_MANAGEITEMS", res.data);
+        return res;
+      })
+      .catch((err) => console.log(err));
+  },
+  async fetchHistorys({ commit }, payload) {
+    await fetchHistory(payload)
+      .then((res) => {
+        commit("SET_HISTORY", res.data);
         return res;
       })
       .catch((err) => console.log(err));

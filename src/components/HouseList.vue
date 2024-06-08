@@ -77,7 +77,7 @@
           <!-- <div class="text-md text-gray-600"></div> -->
           <button
             @click="setList(item.code)"
-            class="mt-2 bg-ivory-500 rounded-md shadow-md py-1 px-3"
+            class="mt-2 bg-ivory-500 rounded-md shadow-md py-1 px-3 md:text-xs lg:text-lg"
           >
             상세 보기
           </button>

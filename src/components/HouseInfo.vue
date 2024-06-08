@@ -181,6 +181,14 @@
           </slide>
         </carousel>
       </div>
+      <div class="col-start-5 col-span-4">
+        <button
+          @click="showHistory(0)"
+          class="bg-blue-500 text-white rounded-md shadow-md w-full px-3 py-1 my-5 hover:bg-blue-700"
+        >
+          거래 내역 보기
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -199,6 +207,7 @@ export default {
   },
   data() {
     return {
+      currentHistoryIndex: 0,
       info: [],
       menu: "",
       // note: "",
@@ -212,7 +221,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("dbInfo", ["items"]),
+    ...mapState("dbInfo", ["items", "history"]),
     filteredLinks() {
       if (this.menu === "building") {
         return this.info[0].url2.building;
@@ -227,6 +236,10 @@ export default {
   },
   async created() {
     this.filterItems();
+    this.fetchHistorys({
+      tokenId: this.$route.params.TokenId,
+      hosu: this.$route.params.Hosu,
+    });
   },
   methods: {
     ...mapActions("dbInfo", [
@@ -234,45 +247,56 @@ export default {
       "fetchManageLists",
       "fetchManageItems",
       "fetchItems",
+      "fetchHistorys",
     ]),
-    showImage() {
-      this.$swal.fire({
-        backdrop: `rgba(0,0,123,0.4)`,
-        imageUrl: this.info.url2.building[0],
-        imageWidth: "50%",
-        imageHeight: "auto",
-        title: "등기 정보 확인",
-        text: "등기 정보를 확인합니다.",
-        icon: "success",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "승인",
-        cancelButtonText: "취소",
-        allowOutsideClick: false,
-      });
+    showHistory(index) {
+      this.currentHistoryIndex = index;
+      const item = this.history[this.currentHistoryIndex];
+      const historyHtml = `
+      <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12 text-right">${
+            this.currentHistoryIndex + 1
+          } / ${this.history.length}</div>
+          <div class="col-span-4 text-left">상태 코드:</div>
+          <div class="col-span-8 text-left">${item.code} (${item.note})</div>
+          <div class="col-span-4 text-left">신규 소유자:</div>
+          <div class="col-span-8 text-left">${item.newOwner}</div>
+          <div class="col-span-4 text-left">이전 소유자:</div>
+          <div class="col-span-8 text-left">${item.prevOwner}</div>
+          <div class="col-span-4 text-left">타임스탬프:</div>
+          <div class="col-span-8 text-left">${item.timeStamp}</div>
+        
+        </div>
+      `;
+      this.$swal
+        .fire({
+          backdrop: `rgba(0,0,123,0.4)`,
+          title: "히스토리 보기",
+          html: `<div style="text-align: left;">${historyHtml}</div>`,
+          icon: "info",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          showCancelButton: true,
+          cancelButtonText: "닫기",
+          confirmButtonText: "다음 아이템 보기",
+          allowOutsideClick: false,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.nextItem();
+          }
+        });
     },
-    async click() {
-      try {
-        console.log(Number(this.items.hosu));
-        console.log(window.klaytn.selectedAddress);
-        console.log(this.items.tokenId);
-        console.log(this.items.agent);
-        await DUBU.methods
-          .addItem(
-            this.items.tokenId,
-            Number(this.items.hosu),
-            this.items.agent,
-            "hi",
-            "hi",
-            []
-          )
-          .send({
-            from: window.klaytn.selectedAddress,
-            gas: 3000000,
-          });
-      } catch (error) {
-        console.error(error);
+    nextItem() {
+      if (this.currentHistoryIndex < this.history.length - 1) {
+        this.showHistory(this.currentHistoryIndex + 1);
+      } else {
+        this.$swal.fire({
+          title: "마지막 항목입니다.",
+          icon: "info",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "확인",
+        });
       }
     },
     filterItems() {
