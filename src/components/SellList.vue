@@ -38,7 +38,7 @@
     </div>
     <main
       v-if="!this.loadingStatus && this.item_list < 1"
-      class="grid min-h-full place-items-center bg-gray-100 py-24 px-6 sm:py-32 lg:px-8"
+      class="grid min-h-full z-0 h-screen place-items-center bg-white py-24 px-6 sm:py-32 lg:px-8"
     >
       <div class="text-center">
         <p class="text-5xl font-semibold text-green-600">이런 !!</p>

@@ -106,9 +106,13 @@ export default {
 
           const infowindowContent = `
       <div style="font-size:14px; width:220px; text-align:left; padding: 10px;">
-        <div style="text-align:center; font-weight:bold; margin-bottom: 10px;">${datas.note}</div>
+        <div style="text-align:center; font-weight:bold; margin-bottom: 10px;">${
+          datas.note
+        }</div>
         <div style="margin-bottom: 5px;">주소 : ${datas.address}</div>
-        <div style="margin-bottom: 5px;">가격 : ${datas.price}(단위 : 원 / m2)</div>
+        <div style="margin-bottom: 5px;" class="text-gray-800 hover:text-blue-400">가격 : ${datas.price
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}(단위 : 원 / m2)</div>
       </div>`;
           const infowindow = new window.kakao.maps.InfoWindow({
             content: infowindowContent,
@@ -141,7 +145,7 @@ export default {
                 (item) => `
           <div style="margin-bottom:10px; display: flex; justify-content: space-between;">
             <span>호수: ${item.hosu}</span>
-            <button onclick="navigateToHouseInfo('${item.tokenId}', '${item.hosu}')">보러 가기</button>
+            <button class="rounded-md shadow-md py-1 px-2 text-gray-800 bg-gray-100 hover:text-blue-400 hover:bg-gray-300" onclick="navigateToHouseInfo('${item.tokenId}', '${item.hosu}')">보러 가기</button>
           </div>
         `
               )
@@ -158,7 +162,7 @@ export default {
           <hr style="margin-bottom: 10px;">
           ${hosuList}
           <div style="text-align:center; margin-top:10px;">
-            <button onclick="closeAllInfowindows()">돌아가기</button>
+            <button class="rounded-md shadow-md py-1 px-2 text-gray-800 bg-gray-100 hover:text-blue-400 hover:bg-gray-300" onclick="closeAllInfowindows()">돌아가기</button>
           </div>
         </div>`;
 
