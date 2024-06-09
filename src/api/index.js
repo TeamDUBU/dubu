@@ -21,5 +21,17 @@ function fetchHistory(payload) {
     `${process.env.VUE_APP_BASE_URL}/purchase/${payload.tokenId}/${payload.hosu}`
   );
 }
+function fetchAgentHistory(payload) {
+  return axios.get(
+    `${process.env.VUE_APP_BASE_URL}/manage/agentHistory/${payload.Address}`
+  );
+}
 
-export { fetchMain, fetchSell, fetchManage, fetchManageList, fetchHistory };
+export {
+  fetchMain,
+  fetchSell,
+  fetchManage,
+  fetchManageList,
+  fetchHistory,
+  fetchAgentHistory,
+};
