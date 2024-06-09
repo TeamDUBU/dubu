@@ -3,7 +3,7 @@
     <div class="grid grid-cols-12 gap-2 h-screen overflow-y-auto">
       <button
         @click="close"
-        class="col-span-1 col-start-12 text-xl font-extrabold pt-16"
+        class="col-span-1 col-start-12 text-xl font-extrabold text-red-500 hover:text-red-700 pt-16"
       >
         X
       </button>
@@ -25,7 +25,7 @@
           </slide>
         </carousel>
       </div>
-      <div class="col-span-3 col-start-1 text-xl">주소:</div>
+      <div class="col-span-3 col-start-1 text-xl text-gray-700">주소:</div>
       <div class="col-start-4 col-end-13 text-left">
         {{ this.info[0].addrToji }}
       </div>
@@ -42,7 +42,12 @@
         <div class="grid grid-cols-8 gap-2">
           <label class="col-span-3 font-semibold text-gray-600">월세:</label>
           <div class="col-span-2 text-right">
-            매 월 {{ this.info[0].option[0] / 100 }}
+            매 월
+            {{
+              (this.info[0].option[0] / 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }}
           </div>
           <span class="col-span-1 text-gray-600">만 원</span>
         </div>
@@ -51,7 +56,11 @@
             >보증금 / 전세금:</label
           >
           <div class="col-span-2 text-right">
-            {{ this.info[0].option[1] / 100 }}
+            {{
+              (this.info[0].option[1] / 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }}
           </div>
           <span class="col-span-1 text-gray-600">만 원</span>
         </div>
@@ -61,50 +70,54 @@
             >관리비:</label
           >
           <div class="col-span-2 text-right border-b-2 border-dashed">
-            {{ this.info[0].option[2] / 100 }}
+            {{
+              (this.info[0].option[2] / 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }}
           </div>
           <span class="col-span-1 text-gray-600 border-b-2 border-dashed"
             >만 원</span
           >
         </div>
-        <div class="grid grid-cols-8 gap-2 items-center">
+        <div class="grid grid-cols-8 gap-2 items-center pt-4">
           <span class="col-span-3 font-semibold text-gray-600"
             >주차 가능 여부:</span
-          >
-          <div class="col-span-2 text-right">
+          ><img src="@/assets/parking.png" class="w-10" />
+          <div class="col-span-2 text-left">
             {{ this.info[0].option[3] ? "O" : "X" }}
           </div>
         </div>
         <div class="grid grid-cols-8 gap-2 items-center">
           <span class="col-span-3 font-semibold text-gray-600"
             >엘리베이터 유무:</span
-          >
-          <div class="col-span-2 text-right">
+          ><img src="@/assets/ele.png" class="w-10" />
+          <div class="col-span-2 text-left">
             {{ this.info[0].option[4] ? "O" : "X" }}
           </div>
         </div>
         <div class="grid grid-cols-8 gap-2 items-center">
           <span class="col-span-3 font-semibold text-gray-600"
             >애완동물 가능 여부:</span
-          >
-          <div class="col-span-2 text-right">
+          ><img src="@/assets/pet.png" class="w-10" />
+          <div class="col-span-2 text-left">
             {{ this.info[0].option[5] ? "O" : "X" }}
           </div>
         </div>
-        <div class="grid grid-cols-8 gap-2 items-center">
+        <div class="grid grid-cols-8 gap-2 items-center pb-4">
           <span
             class="col-span-3 font-semibold text-gray-600 border-b-2 border-dashed"
           >
             풀 옵션
             <span
-              class="tooltip-container text-gray-600 ml-1 rounded-full text-sm border-b-2 border-dashed"
+              class="tooltip-container text-gray-600 ml-1 rounded-full text-sm border-b-2 border-dashed pb-4"
               >? :
               <span class="tooltip-text bg-gray-200 p-2 rounded-md shadow-lg">
                 <strong>냉장고, 에어컨, 전자레인지 등이 있나요?</strong>
               </span>
-            </span>
-          </span>
-          <div class="col-span-2 text-right border-b-2 border-dashed">
+            </span> </span
+          ><img src="@/assets/full.png" class="border-b-2 border-dashed w-10" />
+          <div class="col-span-2 text-left border-b-2 border-dashed pb-4">
             {{ this.info[0].option[6] ? "O" : "X" }}
           </div>
         </div>
@@ -139,7 +152,7 @@
       <div class="col-start-5 col-span-4" v-else>
         <button
           @click="addContraction"
-          class="bg-blue-500 text-white rounded-md shadow-md w-full px-3 py-1 my-5 hover:bg-blue-700"
+          class="mt-2 bg-blue-500 text-white rounded-md shadow-md px-3 py-1 hover:bg-blue-700"
         >
           계약서 작성
         </button>
@@ -148,19 +161,19 @@
       <div class="col-start-1 col-span-12">
         <button
           @click="menu = 'building'"
-          class="bg-blue-500 text-white rounded-md shadow-md col-span-3 px-3 py-1 my-5 hover:bg-blue-700"
+          class="mt-2 rounded-md shadow-md py-1 px-3 text-lg bg-gray-100 hover:text-blue-400 hover:bg-gray-300"
         >
           건축물 대장 보기
         </button>
         <button
           @click="menu = 'realEstate'"
-          class="bg-blue-500 text-white rounded-md shadow-md col-span-3 px-3 py-1 my-5 hover:bg-blue-700"
+          class="mt-2 rounded-md shadow-md py-1 px-3 text-lg bg-gray-100 hover:text-blue-400 hover:bg-gray-300"
         >
           등기부 등본 보기
         </button>
         <button
           @click="menu = 'toji'"
-          class="bg-blue-500 text-white rounded-md shadow-md col-span-3 px-3 py-1 my-5 hover:bg-blue-700"
+          class="mt-2 rounded-md shadow-md py-1 px-3 text-lg bg-gray-100 hover:text-blue-400 hover:bg-gray-300"
         >
           토지 대장부 보기
         </button>
@@ -181,10 +194,10 @@
           </slide>
         </carousel>
       </div>
-      <div class="col-start-5 col-span-4">
+      <div class="col-start-5 col-span-4 py-4">
         <button
           @click="showHistory(0)"
-          class="bg-blue-500 text-white rounded-md shadow-md w-full px-3 py-1 my-5 hover:bg-blue-700"
+          class="mt-2 rounded-md shadow-md py-1 px-3 text-lg bg-gray-100 hover:text-blue-400 hover:bg-gray-300"
         >
           거래 내역 보기
         </button>
@@ -209,8 +222,11 @@ export default {
     return {
       currentHistoryIndex: 0,
       info: [],
+      item: "",
+      amount: "",
+      date: "",
+      statusCode: "",
       menu: "",
-      // note: "",
       option: {
         perPage: 1,
         navigationEnabled: true,
@@ -251,21 +267,44 @@ export default {
     ]),
     showHistory(index) {
       this.currentHistoryIndex = index;
-      const item = this.history[this.currentHistoryIndex];
+      let item = this.history[this.currentHistoryIndex];
+      let pattern =
+        /(.*?)_(카카오페이)_(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2})_(\d+KRW)/;
+      let match = item.note.match(pattern);
+
+      if (match) {
+        this.statusCode = match[1];
+        this.paymentMethod = match[2];
+        this.date = match[3];
+        this.amount = match[4];
+      }
       const historyHtml = `
       <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 text-right">${
             this.currentHistoryIndex + 1
           } / ${this.history.length}</div>
           <div class="col-span-4 text-left">상태 코드:</div>
-          <div class="col-span-8 text-left">${item.code} (${item.note})</div>
+          <div class="col-span-8 text-left">${item.code} (${
+        item.code == 0 ? "소유권 보존" : this.statusCode
+      })</div>
           <div class="col-span-4 text-left">신규 소유자:</div>
           <div class="col-span-8 text-left">${item.newOwner}</div>
           <div class="col-span-4 text-left">이전 소유자:</div>
           <div class="col-span-8 text-left">${item.prevOwner}</div>
           <div class="col-span-4 text-left">타임스탬프:</div>
           <div class="col-span-8 text-left">${item.timeStamp}</div>
-        
+          <div class="col-span-4 text-left">거래 기록:</div>
+          <div class="col-span-8 text-right">${
+            item.code == 0
+              ? ""
+              : this.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          }</div>
+          <div class="col-span-8 col-end-13 text-right">${
+            item.code == 0 ? "" : this.date
+          }</div>
+          <div class="col-span-8 col-end-13 text-right">${
+            item.code == 0 ? "" : this.paymentMethod
+          }</div>
         </div>
       `;
       this.$swal
@@ -291,12 +330,16 @@ export default {
       if (this.currentHistoryIndex < this.history.length - 1) {
         this.showHistory(this.currentHistoryIndex + 1);
       } else {
-        this.$swal.fire({
-          title: "마지막 항목입니다.",
-          icon: "info",
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "확인",
-        });
+        this.$swal
+          .fire({
+            title: "마지막 항목입니다.",
+            icon: "info",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "확인",
+          })
+          .then(() => {
+            this.currentHistoryIndex = 0; // 인덱스 초기화
+          });
       }
     },
     filterItems() {

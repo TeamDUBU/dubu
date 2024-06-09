@@ -48,11 +48,15 @@
             class="w-full h-48 object-fit rounded-t-lg"
           />
           <div class="p-2 text-center">
-            <div class="text-lg font-semibold">주소: {{ item.addrToji }}</div>
-            <div class="text-md text-gray-600">호수: {{ item.hosu }}</div>
+            <div class="md:text-lg text-xs font-semibold">
+              주소: {{ item.addrToji }}
+            </div>
+            <div class="md:text-lg text-xs text-gray-600">
+              호수: {{ item.hosu }}
+            </div>
             <button
               @click="goNFTInfo(item)"
-              class="mt-2 bg-ivory-500 rounded-md shadow-md py-1 px-3"
+              class="mt-2 rounded-md shadow-md py-1 px-3 md:text-lg text-xs bg-gray-100 hover:text-blue-400 hover:bg-gray-300"
             >
               상세 보기
             </button>
@@ -61,7 +65,7 @@
       </carousel>
     </div>
     <!-- Menu -->
-    <div class="grid grid-cols-10 gap-2 font-bold">
+    <div class="grid grid-cols-10 gap-1 font-bold">
       <div
         class="col-span-2 bg-gray-200 rounded-lg shadow-lg m-2"
         v-for="item in menu"
@@ -73,11 +77,11 @@
           class="w-full h-48 object-cover rounded-t-lg p-2"
         />
         <div class="p-2 text-center">
-          <div class="text-lg font-semibold">{{ item.name }}</div>
+          <div class="md:text-lg text-xs font-semibold">{{ item.name }}</div>
           <!-- <div class="text-md text-gray-600"></div> -->
           <button
             @click="setList(item.code)"
-            class="mt-2 bg-ivory-500 rounded-md shadow-md py-1 px-3 md:text-xs lg:text-lg"
+            class="mt-2 rounded-md shadow-md py-1 px-3 md:text-lg text-xs bg-gray-100 hover:text-blue-400 hover:bg-gray-300"
           >
             상세 보기
           </button>

@@ -16,19 +16,19 @@ const SellInfo = () => import("@/components/SellInfo");
 const ItemList = () => import("@/components/ItemList");
 const ItemInfo = () => import("@/components/ItemInfo");
 const CheckOut = () => import("@/components/CheckOut");
+const PageNotFound = () => import("@/views/PageNotFound");
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    component: HomeView,
+  },
+  {
+    path: "/",
     component: MainLayout,
     children: [
-      {
-        path: "/",
-        name: "Home",
-        component: HomeView,
-      },
       {
         path: "/main",
         // name: "main",
@@ -68,7 +68,7 @@ const routes = [
         children: [
           {
             name: "Item-Detail",
-            path: ":TokenId",
+            path: ":TokenId/:Hosu",
             component: ItemInfo,
           },
           {
@@ -105,6 +105,10 @@ const routes = [
         name: "Fail",
         path: "/fail",
         component: Fail,
+      },
+      {
+        path: "*",
+        component: PageNotFound,
       },
     ],
   },
