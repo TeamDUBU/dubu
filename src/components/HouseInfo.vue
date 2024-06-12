@@ -138,6 +138,10 @@
       <div class="col-start-4 col-end-13 text-left">
         {{ this.info[0].contract_list[3] }}
       </div>
+      <div class="col-span-3 col-start-1 text-xl">계약자 ID:</div>
+      <div class="col-start-4 col-end-13 text-left">
+        {{ this.info[0].contract_list[2] }}
+      </div>
       <div
         class="col-start-5 col-span-4"
         v-if="this.info[0].contract_list[0].length > 0"
