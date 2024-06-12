@@ -50,7 +50,7 @@ export default {
     },
     async loadMarker() {
       try {
-        const response = await axios.get(`http://localhost:3000/main/kmap`);
+        const response = await axios.get(`http://3.38.101.193:3000/main/kmap`);
         const markerData = response.data;
         // console.log(markerData);
         const geocoder = new window.kakao.maps.services.Geocoder();
